@@ -1,43 +1,38 @@
-# Astro Starter Kit: Minimal
+# jrmarquard-travel
 
-```sh
-npm create astro@latest -- --template minimal
+Personal travel site built with [Astro](https://astro.build), deployed to [travel.johnmarquard.me](https://travel.johnmarquard.me) via GitHub Pages.
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
 ├── public/
+│   ├── favicon.svg
+│   └── photos/          # Trip photos (served as static assets)
 ├── src/
+│   ├── data/
+│   │   └── photos/      # Photo metadata JSON per trip
+│   ├── layouts/
+│   │   └── Layout.astro
 │   └── pages/
-│       └── index.astro
+│       ├── index.astro           # Trip index
+│       └── korea-japan-2026/
+│           └── index.astro       # Korea / Japan 2026 trip page
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+| Command           | Action                                      |
+| :---------------- | :------------------------------------------ |
+| `npm install`     | Install dependencies                        |
+| `npm run dev`     | Start local dev server at `localhost:4321`  |
+| `npm run build`   | Build production site to `./dist/`          |
+| `npm run preview` | Preview the production build locally        |
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Adding a Trip
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Add photo metadata to `src/data/photos/<trip-slug>.json`
+2. Place photos in `public/photos/<trip-slug>/`
+3. Create a page at `src/pages/<trip-slug>/index.astro`
+4. Add the trip to the list in `src/pages/index.astro`
