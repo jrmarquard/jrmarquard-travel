@@ -1,25 +1,91 @@
 ---
+import Layout from '../layouts/Layout.astro';
+
+const trips = [
+  {
+    title: 'Korea / Japan',
+    year: 2026,
+    slug: 'korea-japan-2026',
+    countries: ['🇰🇷 Korea', '🇯🇵 Japan'],
+    duration: '6 days',
+  },
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Travel</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Hello World</h1>
-  </body>
-</html>
+<Layout title="Travel">
+  <header>
+    <h1>Travel</h1>
+  </header>
+
+  <ul class="trips">
+    {trips.map((trip) => (
+      <li>
+        <a href={`/${trip.slug}`}>
+          <span class="trip-title">
+            {trip.title}
+            <span class="year">{trip.year}</span>
+          </span>
+          <span class="trip-meta">
+            {trip.duration} &middot; {trip.countries.join(' ')}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>
+
+<style>
+  header {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  ul.trips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  li a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    transition: opacity 0.15s;
+  }
+
+  li a:hover {
+    opacity: 0.55;
+  }
+
+  .trip-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .year {
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 0.4em;
+  }
+
+  .trip-meta {
+    font-size: 0.82rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,307 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import photos from '../../data/photos/korea-japan-2026.json';
+
+const COUNTRY_FLAG: Record<string, string> = {
+  Korea: '🇰🇷',
+  Japan: '🇯🇵',
+};
+
+const DAY_LABELS: Record<string, string> = {
+  '2026-03-20': 'Jeju, South Korea',
+  '2026-03-21': 'Arrived in Osaka',
+  '2026-03-22': 'Osaka',
+  '2026-03-24': 'Noto Peninsula',
+  '2026-03-25': 'Toyama',
+};
+
+const itinerary = [
+  { date: 'Mar 20', label: 'Jeju',           country: 'Korea' },
+  { date: 'Mar 21', label: 'Osaka',           country: 'Japan' },
+  { date: 'Mar 22', label: 'Osaka',           country: 'Japan' },
+  { date: 'Mar 23', label: 'Kanazawa',        country: 'Japan' },
+  { date: 'Mar 24', label: 'Noto Peninsula',  country: 'Japan' },
+  { date: 'Mar 25', label: 'Toyama',          country: 'Japan' },
+];
+
+// Group photos by date
+const byDate = photos.reduce<Record<string, typeof photos>>((acc, p) => {
+  const key = p.date ?? 'unknown';
+  if (!acc[key]) acc[key] = [];
+  acc[key].push(p);
+  return acc;
+}, {});
+
+const days = Object.entries(byDate).sort(([a], [b]) => a.localeCompare(b));
+
+function formatDate(iso: string) {
+  const d = new Date(iso + 'T12:00:00Z');
+  return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+---
+
+<Layout title="Korea / Japan 2026" description="A trip through Jeju, Osaka, Noto, and Toyama — March 2026">
+  <nav>
+    <a href="/" class="back">← Travel</a>
+  </nav>
+
+  <header class="trip-header">
+    <h1>Korea <span class="slash">/</span> Japan</h1>
+    <p class="dates">March 20 – 25, 2026</p>
+  </header>
+
+  <section class="meta-strip">
+    <div class="meta-item">
+      <span class="meta-label">Duration</span>
+      <span>6 days</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Countries</span>
+      <span>🇰🇷 Korea &nbsp;🇯🇵 Japan</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Cities</span>
+      <span>Jeju · Osaka · Noto · Toyama</span>
+    </div>
+  </section>
+
+  <section class="itinerary">
+    <h2>Itinerary</h2>
+    <ol>
+      {itinerary.map((item) => (
+        <li>
+          <span class="it-date">{item.date}</span>
+          <span class="it-flag">{COUNTRY_FLAG[item.country]}</span>
+          <span class="it-label">{item.label}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <hr />
+
+  <section class="journal">
+    {days.map(([date, dayPhotos]) => (
+      <div class="day">
+        <div class="day-header">
+          <time class="day-date" datetime={date}>{formatDate(date)}</time>
+          <span class="day-location">
+            {COUNTRY_FLAG[dayPhotos[0].country]}&nbsp;{DAY_LABELS[date] ?? `${dayPhotos[0].location}, ${dayPhotos[0].country}`}
+          </span>
+        </div>
+        <div class={`photo-grid cols-${Math.min(dayPhotos.length, 2)}`}>
+          {dayPhotos.map((photo) => (
+            <figure>
+              <img
+                src={`/photos/korea-japan-2026/${photo.filename}`}
+                alt={`${photo.location}, ${photo.country}`}
+                loading="lazy"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</Layout>
+
+<style>
+  nav {
+    margin-bottom: 2.5rem;
+  }
+
+  .back {
+    font-size: 0.82rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+
+  .back:hover {
+    color: var(--text);
+  }
+
+  /* ── Header ── */
+  .trip-header {
+    margin-bottom: 2rem;
+  }
+
+  .trip-header h1 {
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 0.4rem;
+  }
+
+  .slash {
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .dates {
+    font-size: 1rem;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* ── Meta strip ── */
+  .meta-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2.5rem;
+    margin-bottom: 2.5rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.88rem;
+    gap: 0.15rem;
+  }
+
+  .meta-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Itinerary ── */
+  .itinerary {
+    margin-bottom: 2.5rem;
+  }
+
+  .itinerary h2 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+
+  .itinerary ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    counter-reset: itinerary;
+  }
+
+  .itinerary li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+    counter-increment: itinerary;
+  }
+
+  .itinerary li::before {
+    content: counter(itinerary);
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 1.2rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .it-date {
+    color: var(--muted);
+    font-size: 0.82rem;
+    min-width: 3.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .it-flag {
+    font-size: 1rem;
+  }
+
+  .it-label {
+    font-weight: 450;
+  }
+
+  /* ── Divider ── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Journal ── */
+  .journal {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .day-header {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .day-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .day-location {
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  /* ── Photo grid ── */
+  .photo-grid {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .photo-grid.cols-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-grid.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  figure {
+    margin: 0;
+    overflow: hidden;
+    background: #f4f4f4;
+  }
+
+  figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    transition: transform 0.4s ease, opacity 0.2s;
+    display: block;
+  }
+
+  figure:hover img {
+    transform: scale(1.02);
+    opacity: 0.92;
+  }
+
+  @media (max-width: 580px) {
+    .photo-grid.cols-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
