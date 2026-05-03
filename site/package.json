@@ -15,7 +15,8 @@
     "process-photos": "node scripts/process-photos.js"
   },
   "dependencies": {
-    "astro": "^6.1.5"
+    "astro": "^6.1.5",
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^8.58.1",
