@@ -18,3 +18,7 @@ dist/
 # Local
 .claude/
 temp-photos/
+
+# Editor
+editor/.next/
+editor/node_modules/
