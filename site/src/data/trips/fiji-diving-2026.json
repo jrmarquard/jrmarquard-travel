@@ -1,0 +1,324 @@
+{
+  "$schema": "2.0",
+  "id": "fiji-diving-2026",
+  "title": "Fiji Diving",
+  "description": "Diving trip through Nadi, Beqa Island, and Voli Voli, Raki Raki.",
+  "dates": {
+    "start": "2026-05-15",
+    "end": "2026-05-26"
+  },
+  "countries": ["AU", "FJ"],
+  "tags": ["diving", "family", "beach"],
+  "days": [
+    {
+      "date": "2026-05-15",
+      "title": "Travel to Fiji",
+      "primaryStopId": "stop-nadi",
+      "stops": [
+        {
+          "id": "stop-sydney",
+          "location": { "name": "Sydney", "region": "NSW", "country": "AU", "countryName": "Australia" },
+          "departure": "2026-05-15T13:15:00+10:00",
+          "timezone": "Australia/Sydney"
+        },
+        {
+          "id": "stop-nadi",
+          "location": { "name": "Nadi", "region": "Western Division", "country": "FJ", "countryName": "Fiji" },
+          "arrival": "2026-05-15T18:55:00+12:00",
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "title": "Transfer to Beqa Island",
+      "primaryStopId": "stop-beqa",
+      "stops": [
+        {
+          "id": "stop-nadi-start",
+          "location": { "name": "Nadi", "region": "Western Division", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji",
+          "notes": "Start location; transfer timing not provided in itinerary."
+        },
+        {
+          "id": "stop-beqa",
+          "location": { "name": "Beqa Island", "region": "Central Division", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-17",
+      "title": "Dive day",
+      "primaryStopId": "stop-beqa",
+      "stops": [
+        { "id": "stop-beqa", "location": { "name": "Beqa Island", "region": "Central Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "title": "Dive day",
+      "primaryStopId": "stop-beqa",
+      "stops": [
+        { "id": "stop-beqa", "location": { "name": "Beqa Island", "region": "Central Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-19",
+      "title": "Dive day",
+      "primaryStopId": "stop-beqa",
+      "stops": [
+        { "id": "stop-beqa", "location": { "name": "Beqa Island", "region": "Central Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "title": "Dive day",
+      "primaryStopId": "stop-beqa",
+      "stops": [
+        { "id": "stop-beqa", "location": { "name": "Beqa Island", "region": "Central Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-21",
+      "title": "Transfer to Voli Voli, Raki Raki",
+      "primaryStopId": "stop-rakiraki",
+      "stops": [
+        {
+          "id": "stop-rakiraki",
+          "location": { "name": "Voli Voli, Raki Raki", "region": "Western Division", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-22",
+      "title": "Dive day",
+      "primaryStopId": "stop-rakiraki",
+      "stops": [
+        { "id": "stop-rakiraki", "location": { "name": "Voli Voli, Raki Raki", "region": "Western Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-23",
+      "title": "Resort day",
+      "primaryStopId": "stop-rakiraki",
+      "stops": [
+        { "id": "stop-rakiraki", "location": { "name": "Voli Voli, Raki Raki", "region": "Western Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-24",
+      "title": "Resort day",
+      "primaryStopId": "stop-rakiraki",
+      "stops": [
+        { "id": "stop-rakiraki", "location": { "name": "Voli Voli, Raki Raki", "region": "Western Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-25",
+      "title": "Resort day",
+      "primaryStopId": "stop-rakiraki",
+      "stops": [
+        { "id": "stop-rakiraki", "location": { "name": "Voli Voli, Raki Raki", "region": "Western Division", "country": "FJ", "countryName": "Fiji" } }
+      ]
+    },
+    {
+      "date": "2026-05-26",
+      "title": "Return to Sydney",
+      "primaryStopId": "stop-sydney-return",
+      "stops": [
+        {
+          "id": "stop-nadi-departure",
+          "location": { "name": "Nadi", "region": "Western Division", "country": "FJ", "countryName": "Fiji" },
+          "departure": "2026-05-26T15:55:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "id": "stop-sydney-return",
+          "location": { "name": "Sydney", "region": "NSW", "country": "AU", "countryName": "Australia" },
+          "arrival": "2026-05-26T18:55:00+10:00",
+          "timezone": "Australia/Sydney"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "flight-outbound",
+      "type": "flight",
+      "status": "confirmed",
+      "airline": "Commercial airline",
+      "cabin": "economy",
+      "legs": [
+        {
+          "flightNumber": "",
+          "departure": {
+            "location": { "name": "Sydney", "country": "AU", "countryName": "Australia" },
+            "datetime": "2026-05-15T13:15:00+10:00",
+            "timezone": "Australia/Sydney"
+          },
+          "arrival": {
+            "location": { "name": "Nadi", "country": "FJ", "countryName": "Fiji" },
+            "datetime": "2026-05-15T18:55:00+12:00",
+            "timezone": "Pacific/Fiji"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stay-nadi",
+      "type": "accommodation",
+      "status": "confirmed",
+      "name": "Nadi",
+      "location": { "name": "Nadi", "country": "FJ", "countryName": "Fiji" },
+      "checkIn": "2026-05-15",
+      "checkOut": "2026-05-16"
+    },
+    {
+      "id": "stay-beqa",
+      "type": "accommodation",
+      "status": "confirmed",
+      "name": "Beqa Island",
+      "location": { "name": "Beqa Island", "country": "FJ", "countryName": "Fiji" },
+      "checkIn": "2026-05-16",
+      "checkOut": "2026-05-21"
+    },
+    {
+      "id": "transfer-nadi-to-unknown",
+      "type": "transfer",
+      "status": "planned",
+      "mode": "Road transfer",
+      "notes": "Drive leg before boat connection; exact endpoint is currently unknown.",
+      "waypoints": [
+        {
+          "location": { "name": "Nadi", "country": "FJ", "countryName": "Fiji" },
+          "datetime": "2026-05-16T08:00:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "location": { "name": "???", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "id": "transfer-unknown-to-beqa",
+      "type": "transfer",
+      "status": "planned",
+      "mode": "Boat transfer",
+      "notes": "Boat leg to Beqa Island; exact departure point is currently unknown.",
+      "waypoints": [
+        {
+          "location": { "name": "???", "country": "FJ", "countryName": "Fiji" },
+          "datetime": "2026-05-16T10:30:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "location": { "name": "Beqa Island", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "id": "transfer-beqa-to-pacific-harbour",
+      "type": "transfer",
+      "status": "confirmed",
+      "mode": "Boat transfer",
+      "waypoints": [
+        {
+          "location": { "name": "Beqa Island", "country": "FJ", "countryName": "Fiji" },
+          "datetime": "2026-05-21T09:00:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "location": { "name": "Pacific Harbour", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "id": "transfer-pacific-harbour-to-rakiraki",
+      "type": "transfer",
+      "status": "confirmed",
+      "mode": "Road transfer",
+      "waypoints": [
+        {
+          "location": { "name": "Pacific Harbour", "country": "FJ", "countryName": "Fiji" },
+          "datetime": "2026-05-21T12:30:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "location": { "name": "Voli Voli, Raki Raki", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "id": "stay-rakiraki-a",
+      "type": "accommodation",
+      "status": "confirmed",
+      "name": "Voli Voli, Raki Raki",
+      "location": { "name": "Voli Voli, Raki Raki", "country": "FJ", "countryName": "Fiji" },
+      "checkIn": "2026-05-21",
+      "checkOut": "2026-05-23"
+    },
+    {
+      "id": "activity-rakiraki-diving",
+      "type": "activity",
+      "status": "confirmed",
+      "name": "Diving",
+      "location": { "name": "Voli Voli, Raki Raki", "country": "FJ", "countryName": "Fiji" },
+      "schedule": { "dates": ["2026-05-22"] }
+    },
+    {
+      "id": "stay-rakiraki-b",
+      "type": "accommodation",
+      "status": "confirmed",
+      "name": "Voli Voli, Raki Raki",
+      "location": { "name": "Voli Voli, Raki Raki", "country": "FJ", "countryName": "Fiji" },
+      "checkIn": "2026-05-23",
+      "checkOut": "2026-05-26"
+    },
+    {
+      "id": "transfer-rakiraki-nadi",
+      "type": "transfer",
+      "status": "confirmed",
+      "mode": "Road transfer",
+      "waypoints": [
+        {
+          "location": { "name": "Voli Voli, Raki Raki", "country": "FJ", "countryName": "Fiji" },
+          "datetime": "2026-05-26T08:00:00+12:00",
+          "timezone": "Pacific/Fiji"
+        },
+        {
+          "location": { "name": "Nadi", "country": "FJ", "countryName": "Fiji" },
+          "timezone": "Pacific/Fiji"
+        }
+      ]
+    },
+    {
+      "id": "flight-return",
+      "type": "flight",
+      "status": "confirmed",
+      "airline": "Commercial airline",
+      "cabin": "economy",
+      "legs": [
+        {
+          "flightNumber": "",
+          "departure": {
+            "location": { "name": "Nadi", "country": "FJ", "countryName": "Fiji" },
+            "datetime": "2026-05-26T15:55:00+12:00",
+            "timezone": "Pacific/Fiji"
+          },
+          "arrival": {
+            "location": { "name": "Sydney", "country": "AU", "countryName": "Australia" },
+            "datetime": "2026-05-26T18:55:00+10:00",
+            "timezone": "Australia/Sydney"
+          }
+        }
+      ]
+    }
+  ],
+  "photos": []
+}
