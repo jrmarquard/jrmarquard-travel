@@ -1,42 +1,35 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import photos from '../../data/photos/korea-japan-2026.json';
+import { trip } from '../../data/trips/korea-japan-2026';
+import type { Location } from '../../schema/types';
 
 const COUNTRY_FLAG: Record<string, string> = {
-  Korea: '🇰🇷',
-  Japan: '🇯🇵',
+  KR: '🇰🇷',
+  JP: '🇯🇵',
 };
 
-const DAY_LABELS: Record<string, string> = {
-  '2026-03-20': 'Jeju, South Korea',
-  '2026-03-21': 'Arrived in Osaka',
-  '2026-03-22': 'Osaka',
-  '2026-03-24': 'Noto Peninsula',
-  '2026-03-25': 'Toyama',
-};
-
-const itinerary = [
-  { date: 'Mar 20', label: 'Jeju',           country: 'Korea' },
-  { date: 'Mar 21', label: 'Osaka',           country: 'Japan' },
-  { date: 'Mar 22', label: 'Osaka',           country: 'Japan' },
-  { date: 'Mar 23', label: 'Kanazawa',        country: 'Japan' },
-  { date: 'Mar 24', label: 'Noto Peninsula',  country: 'Japan' },
-  { date: 'Mar 25', label: 'Toyama',          country: 'Japan' },
-];
-
-// Group photos by date
-const byDate = photos.reduce<Record<string, typeof photos>>((acc, p) => {
-  const key = p.date ?? 'unknown';
-  if (!acc[key]) acc[key] = [];
-  acc[key].push(p);
+// Build a map of date → photos[]
+const photosByDate = trip.photos.reduce<Record<string, typeof trip.photos>>((acc, p) => {
+  if (!acc[p.date]) acc[p.date] = [];
+  acc[p.date].push(p);
   return acc;
 }, {});
 
-const days = Object.entries(byDate).sort(([a], [b]) => a.localeCompare(b));
+function getPrimaryLocation(day: (typeof trip.days)[number]): Location | null {
+  const stop = day.stops.find((s) => s.id === day.primaryStopId);
+  if (!stop) return null;
+  const loc = stop.location;
+  return 'kind' in loc ? null : (loc as Location);
+}
 
 function formatDate(iso: string) {
   const d = new Date(iso + 'T12:00:00Z');
   return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+function formatShortDate(iso: string) {
+  const d = new Date(iso + 'T12:00:00Z');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 }
 ---
 
@@ -53,11 +46,11 @@ function formatDate(iso: string) {
   <section class="meta-strip">
     <div class="meta-item">
       <span class="meta-label">Duration</span>
-      <span>6 days</span>
+      <span>{trip.days.length} days</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Countries</span>
-      <span>🇰🇷 Korea &nbsp;🇯🇵 Japan</span>
+      <span>{trip.countries.map((c) => COUNTRY_FLAG[c]).join(' ')}&nbsp;Korea &nbsp;Japan</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Cities</span>
@@ -68,40 +61,47 @@ function formatDate(iso: string) {
   <section class="itinerary">
     <h2>Itinerary</h2>
     <ol>
-      {itinerary.map((item) => (
-        <li>
-          <span class="it-date">{item.date}</span>
-          <span class="it-flag">{COUNTRY_FLAG[item.country]}</span>
-          <span class="it-label">{item.label}</span>
-        </li>
-      ))}
+      {trip.days.map((day) => {
+        const loc = getPrimaryLocation(day);
+        return (
+          <li>
+            <span class="it-date">{formatShortDate(day.date)}</span>
+            <span class="it-flag">{loc ? (COUNTRY_FLAG[loc.country] ?? '') : ''}</span>
+            <span class="it-label">{loc?.name ?? day.title}</span>
+          </li>
+        );
+      })}
     </ol>
   </section>
 
   <hr />
 
   <section class="journal">
-    {days.map(([date, dayPhotos]) => (
-      <div class="day">
-        <div class="day-header">
-          <time class="day-date" datetime={date}>{formatDate(date)}</time>
-          <span class="day-location">
-            {COUNTRY_FLAG[dayPhotos[0].country]}&nbsp;{DAY_LABELS[date] ?? `${dayPhotos[0].location}, ${dayPhotos[0].country}`}
-          </span>
+    {trip.days.filter((day) => photosByDate[day.date]?.length).map((day) => {
+      const dayPhotos = photosByDate[day.date];
+      const loc = getPrimaryLocation(day);
+      return (
+        <div class="day">
+          <div class="day-header">
+            <time class="day-date" datetime={day.date}>{formatDate(day.date)}</time>
+            <span class="day-location">
+              {loc ? COUNTRY_FLAG[loc.country] : ''}&nbsp;{day.title}
+            </span>
+          </div>
+          <div class={`photo-grid cols-${Math.min(dayPhotos.length, 2)}`}>
+            {dayPhotos.map((photo) => (
+              <figure>
+                <img
+                  src={`/photos/korea-japan-2026/${photo.filename}`}
+                  alt={photo.alt ?? (loc ? `${loc.name}, ${loc.countryName}` : photo.filename)}
+                  loading="lazy"
+                />
+              </figure>
+            ))}
+          </div>
         </div>
-        <div class={`photo-grid cols-${Math.min(dayPhotos.length, 2)}`}>
-          {dayPhotos.map((photo) => (
-            <figure>
-              <img
-                src={`/photos/korea-japan-2026/${photo.filename}`}
-                alt={`${photo.location}, ${photo.country}`}
-                loading="lazy"
-              />
-            </figure>
-          ))}
-        </div>
-      </div>
-    ))}
+      );
+    })}
   </section>
 </Layout>
 
