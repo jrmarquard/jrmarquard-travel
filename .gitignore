@@ -22,3 +22,6 @@ temp-photos/
 # Editor
 editor/.next/
 editor/node_modules/
+
+# Mac
+.DS_Store
