@@ -101,16 +101,17 @@ interface Coordinates {
 
 interface PlaceLocation {
   name: string;
+  geocodeName?: string;
   region?: string;
   country?: string;
   countryName?: string;
   coordinates?: Coordinates;
 }
 
-// Dedup key: (name, country) — region is often too specific for Nominatim.
+// Dedup key: (geocodeName ?? name, country) — region is often too specific for Nominatim.
 // Multiple location objects that share the same key will all receive the same coords.
 interface Group {
-  name: string;
+  searchName: string;
   country?: string;
   region?: string;
   locs: PlaceLocation[];
@@ -148,12 +149,13 @@ function collectGroups(obj: unknown, groups: Map<string, Group>): void {
 
     // Skip if no country — can't constrain search so risk wrong-country hits
     if (loc.country) {
-      const key = `${name}||${loc.country}`;
+      const searchName = loc.geocodeName?.trim() || name;
+      const key = `${searchName}||${loc.country}`;
       const existing = groups.get(key);
       if (existing) {
         existing.locs.push(loc);
       } else {
-        groups.set(key, { name, country: loc.country, region: loc.region, locs: [loc] });
+        groups.set(key, { searchName, country: loc.country, region: loc.region, locs: [loc] });
       }
     }
     // Don't recurse into a location object's own fields
@@ -182,7 +184,8 @@ if (groups.size === 0) {
 console.log(`Found ${groups.size} unique location(s) missing coordinates:\n`);
 for (const g of groups.values()) {
   const detail = [g.region, g.country].filter(Boolean).join(', ');
-  console.log(`  - ${g.name}${detail ? ` (${detail})` : ''}`);
+  const geocodeNote = g.searchName !== g.locs[0]?.name ? ` → searching "${g.searchName}"` : '';
+  console.log(`  - ${g.locs[0]?.name}${detail ? ` (${detail})` : ''}${geocodeNote}`);
 }
 console.log();
 
@@ -192,10 +195,13 @@ const groupList = Array.from(groups.values());
 
 for (let i = 0; i < groupList.length; i++) {
   const g = groupList[i];
-  const label = [g.name, g.region, g.country].filter(Boolean).join(', ');
+  const displayName = g.locs[0]?.name ?? g.searchName;
+  const label = g.searchName !== displayName
+    ? `${displayName} (via "${g.searchName}", ${g.country})`
+    : [g.searchName, g.region, g.country].filter(Boolean).join(', ');
   process.stdout.write(`Geocoding (${i + 1}/${groupList.length}): "${label}" … `);
 
-  const coords = await geocode(g.name, g.country, g.region);
+  const coords = await geocode(g.searchName, g.country, g.region);
 
   if (coords) {
     for (const loc of g.locs) {
