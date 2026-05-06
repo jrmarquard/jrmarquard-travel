@@ -1,4 +1,6 @@
 ---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import Layout from '../../layouts/Layout.astro';
 import { trip } from '../../data/trips/fiji-diving-2026';
 import type {
@@ -360,6 +362,8 @@ function formatTransitLine(segment: FlightSegment | TransferSegment) {
   return `${formatTransitPrefix(segment)}: ${title}`;
 }
 
+const hasMap = existsSync(join(process.cwd(), 'public', 'maps', `${trip.id}.png`));
+
 function getMapsUrl(locationName: string): string {
   return `https://www.google.com/maps/search/${encodeURIComponent(locationName)}`;
 }
@@ -395,6 +399,12 @@ function getTransitMapsUrl(segment: FlightSegment | TransferSegment): string {
       <span>{trip.tags?.join(' · ')}</span>
     </div>
   </section>
+
+  {hasMap && (
+    <section class="trip-map">
+      <img src={`/maps/${trip.id}.png`} alt={`Route map for ${trip.title}`} />
+    </section>
+  )}
 
   <section class="timeline">
     <h2>Day Timeline</h2>
@@ -547,6 +557,16 @@ function getTransitMapsUrl(segment: FlightSegment | TransferSegment): string {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+
+  .trip-map {
+    margin-bottom: 2.5rem;
+  }
+
+  .trip-map img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
   }
 
   .timeline {

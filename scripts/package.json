@@ -3,7 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "generate-map": "tsx generate-map.ts"
+    "generate-map": "tsx generate-map.ts",
+    "generate-maps": "tsx generate-maps.ts"
   },
   "dependencies": {
     "staticmaps": "^1.13.1"

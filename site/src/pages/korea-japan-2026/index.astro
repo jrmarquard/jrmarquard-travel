@@ -1,4 +1,6 @@
 ---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import Layout from '../../layouts/Layout.astro';
 import { trip } from '../../data/trips/korea-japan-2026';
 import type { Location } from '../../schema/types';
@@ -31,6 +33,8 @@ function formatShortDate(iso: string) {
   const d = new Date(iso + 'T12:00:00Z');
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 }
+
+const hasMap = existsSync(join(process.cwd(), 'public', 'maps', `${trip.id}.png`));
 ---
 
 <Layout title="Korea / Japan 2026" description="A trip through Jeju, Osaka, Noto, and Toyama — March 2026">
@@ -57,6 +61,12 @@ function formatShortDate(iso: string) {
       <span>Jeju · Osaka · Noto · Toyama</span>
     </div>
   </section>
+
+  {hasMap && (
+    <section class="trip-map">
+      <img src={`/maps/${trip.id}.png`} alt={`Route map for ${trip.title}`} />
+    </section>
+  )}
 
   <section class="itinerary">
     <h2>Itinerary</h2>
@@ -170,6 +180,17 @@ function formatShortDate(iso: string) {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
+  }
+
+  /* ── Map ── */
+  .trip-map {
+    margin-bottom: 2.5rem;
+  }
+
+  .trip-map img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
   }
 
   /* ── Itinerary ── */
