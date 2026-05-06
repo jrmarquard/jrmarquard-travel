@@ -179,10 +179,14 @@
           "id": "stop-rakiraki",
           "location": {
             "name": "Voli Voli, Raki Raki",
+            "geocodeName": "Rakiraki",
             "region": "Western Division",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3780743,
+              "lng": 178.1531001
+            }
           },
           "timezone": "Pacific/Fiji"
         }
@@ -197,10 +201,14 @@
           "id": "stop-rakiraki",
           "location": {
             "name": "Voli Voli, Raki Raki",
+            "geocodeName": "Rakiraki",
             "region": "Western Division",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3780743,
+              "lng": 178.1531001
+            }
           }
         }
       ]
@@ -214,10 +222,14 @@
           "id": "stop-rakiraki",
           "location": {
             "name": "Voli Voli, Raki Raki",
+            "geocodeName": "Rakiraki",
             "region": "Western Division",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3780743,
+              "lng": 178.1531001
+            }
           }
         }
       ]
@@ -231,10 +243,14 @@
           "id": "stop-rakiraki",
           "location": {
             "name": "Voli Voli, Raki Raki",
+            "geocodeName": "Rakiraki",
             "region": "Western Division",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3780743,
+              "lng": 178.1531001
+            }
           }
         }
       ]
@@ -248,10 +264,14 @@
           "id": "stop-rakiraki",
           "location": {
             "name": "Voli Voli, Raki Raki",
+            "geocodeName": "Rakiraki",
             "region": "Western Division",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3780743,
+              "lng": 178.1531001
+            }
           }
         }
       ]
@@ -342,7 +362,10 @@
         "name": "Nadi",
         "country": "FJ",
         "countryName": "Fiji",
-        "coordinates": { "lat": -17.7992725, "lng": 177.4178549 }
+        "coordinates": {
+          "lat": -17.7992725,
+          "lng": 177.4178549
+        }
       },
       "checkIn": "2026-05-15",
       "checkOut": "2026-05-16"
@@ -356,7 +379,10 @@
         "name": "Beqa Island",
         "country": "FJ",
         "countryName": "Fiji",
-        "coordinates": { "lat": -18.3911869, "lng": 178.1227669 }
+        "coordinates": {
+          "lat": -18.3911869,
+          "lng": 178.1227669
+        }
       },
       "checkIn": "2026-05-16",
       "checkOut": "2026-05-21"
@@ -478,7 +504,10 @@
             "name": "Voli Voli, Raki Raki",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3354,
+              "lng": 178.1966
+            }
           },
           "timezone": "Pacific/Fiji"
         }
@@ -491,9 +520,13 @@
       "name": "Voli Voli, Raki Raki",
       "location": {
         "name": "Voli Voli, Raki Raki",
+        "geocodeName": "Rakiraki",
         "country": "FJ",
         "countryName": "Fiji",
-        "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+        "coordinates": {
+          "lat": -17.3780743,
+          "lng": 178.1531001
+        }
       },
       "checkIn": "2026-05-21",
       "checkOut": "2026-05-23"
@@ -505,9 +538,13 @@
       "name": "Diving",
       "location": {
         "name": "Voli Voli, Raki Raki",
+        "geocodeName": "Rakiraki",
         "country": "FJ",
         "countryName": "Fiji",
-        "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+        "coordinates": {
+          "lat": -17.3780743,
+          "lng": 178.1531001
+        }
       },
       "schedule": {
         "dates": [
@@ -522,9 +559,13 @@
       "name": "Voli Voli, Raki Raki",
       "location": {
         "name": "Voli Voli, Raki Raki",
+        "geocodeName": "Rakiraki",
         "country": "FJ",
         "countryName": "Fiji",
-        "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+        "coordinates": {
+          "lat": -17.3780743,
+          "lng": 178.1531001
+        }
       },
       "checkIn": "2026-05-23",
       "checkOut": "2026-05-26"
@@ -540,7 +581,10 @@
             "name": "Voli Voli, Raki Raki",
             "country": "FJ",
             "countryName": "Fiji",
-            "coordinates": { "lat": -17.3354, "lng": 178.1966 }
+            "coordinates": {
+              "lat": -17.3354,
+              "lng": 178.1966
+            }
           },
           "datetime": "2026-05-26T08:00:00+12:00",
           "timezone": "Pacific/Fiji"

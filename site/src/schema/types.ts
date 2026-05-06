@@ -14,6 +14,7 @@ export interface GeoCoordinates {
 
 export interface Location {
   name: string;
+  geocodeName?: string;
   region?: string;
   country: CountryCode;
   countryName: string;
