@@ -17,6 +17,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import StaticMaps from 'staticmaps';
+import { computeLabelOffsets } from './label-placement.js';
 
 const TRIPS_DIR = resolve('../site/src/data/trips');
 const MAPS_DIR = resolve('../site/public/maps');
@@ -102,11 +103,10 @@ async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
     });
   }
 
-  for (const { coord, label } of stopPoints) {
-    if (!label) continue;
-    const base = { coord, text: label, size: 11, font: 'Arial', anchor: 'middle', offsetX: 0, offsetY: 20 };
-    map.addText({ ...base, fill: '#FFFFFF', color: '#FFFFFF', width: 4 });
-    map.addText({ ...base, fill: '#1F2937', color: '#FFFFFF', width: 1 });
+  for (const { coord, text, offsetX, offsetY } of computeLabelOffsets(stopPoints, 1200, 600)) {
+    const base = { coord, text, size: 11, font: 'Arial', anchor: 'middle', offsetX, offsetY };
+    map.addText({ ...base, fill: '#000000', color: '#000000', width: 5 });
+    map.addText({ ...base, fill: '#FFFFFF', color: '#000000', width: 1 });
   }
 
   await map.render();

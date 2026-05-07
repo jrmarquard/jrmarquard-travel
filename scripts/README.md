@@ -69,6 +69,6 @@ Both map scripts produce a PNG with:
 - Green circle — first stop
 - Red circle — last stop
 - Blue circles — intermediate stops
-- Location name labels above each named stop
+- Location name labels on each named stop — each label shifts away from its nearest neighbouring stop and collision-detection nudges it further until clear
 
 Only stops listed as `primaryStopId` for each day are plotted. Transit stops (`in-air`, `at-sea`, `overland`) are connected by the route line but receive no label.
