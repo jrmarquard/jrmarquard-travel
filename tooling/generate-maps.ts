@@ -16,10 +16,10 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { generateTripMap, type Trip } from './map-core.js';
+import { generateTripMap, type Trip } from '@travel/maps';
 
-const TRIPS_DIR = resolve('../site/src/data/trips');
-const MAPS_DIR = resolve('../site/public/maps');
+const TRIPS_DIR = resolve('../apps/site/src/data/trips');
+const MAPS_DIR = resolve('../apps/site/public/maps');
 
 const includeHome = process.argv.includes('--include-home');
 
