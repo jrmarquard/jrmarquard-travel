@@ -80,11 +80,24 @@ importers:
         specifier: ^0.34.5
         version: 0.34.5
 
-  tooling:
+  packages/maps:
     dependencies:
       staticmaps:
         specifier: ^1.13.1
         version: 1.13.1
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
+  tooling:
+    dependencies:
+      '@travel/maps':
+        specifier: workspace:*
+        version: link:../packages/maps
     devDependencies:
       '@types/node':
         specifier: ^25.6.0

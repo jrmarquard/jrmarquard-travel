@@ -2,7 +2,7 @@
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { generateTripMap, type Trip } from './map-core.js';
+import { generateTripMap, type Trip } from '@travel/maps';
 
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const flags = process.argv.slice(2).filter((a) => a.startsWith('--'));
