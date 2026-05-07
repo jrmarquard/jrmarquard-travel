@@ -21,6 +21,19 @@ declare module 'staticmaps' {
     width?: number;
   }
 
+  interface TextOptions {
+    coord: [number, number];
+    text: string;
+    color?: string;
+    fill?: string;
+    width?: number;
+    size?: number;
+    font?: string;
+    anchor?: string;
+    offsetX?: number;
+    offsetY?: number;
+  }
+
   interface MapImage {
     save(path: string): Promise<void>;
   }
@@ -30,6 +43,7 @@ declare module 'staticmaps' {
     image: MapImage;
     addLine(options: LineOptions): void;
     addCircle(options: CircleOptions): void;
+    addText(options: TextOptions): void;
     render(center?: [number, number], zoom?: number): Promise<void>;
   }
 
