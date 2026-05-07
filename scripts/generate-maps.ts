@@ -16,107 +16,12 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import StaticMaps from 'staticmaps';
-import { computeLabelOffsets } from './label-placement.js';
+import { generateTripMap, type Trip } from './map-core.js';
 
 const TRIPS_DIR = resolve('../site/src/data/trips');
 const MAPS_DIR = resolve('../site/public/maps');
 
-// ---------------------------------------------------------------------------
-// Minimal types (subset of site/src/schema/types.ts)
-// ---------------------------------------------------------------------------
-
-interface Coordinates { lat: number; lng: number; }
-interface PlaceLocation { name: string; coordinates?: Coordinates; }
-interface TransitLocation { kind: string; waypoints: PlaceLocation[]; }
-interface Stop { id: string; location: PlaceLocation | TransitLocation; }
-interface Day { primaryStopId: string; stops: Stop[]; }
-interface Trip { id: string; title: string; days: Day[]; }
-
-// ---------------------------------------------------------------------------
-// Map generation
-// ---------------------------------------------------------------------------
-
-function getCoord(stop: Stop): [number, number] | null {
-  const loc = stop.location;
-  if ('kind' in loc) {
-    for (const wp of loc.waypoints) {
-      if (wp.coordinates) return [wp.coordinates.lng, wp.coordinates.lat];
-    }
-    return null;
-  }
-  if (loc.coordinates) return [loc.coordinates.lng, loc.coordinates.lat];
-  return null;
-}
-
-function getStopName(stop: Stop): string {
-  const loc = stop.location;
-  return 'kind' in loc ? `${loc.kind} transit` : loc.name;
-}
-
-function getLabelName(stop: Stop): string | null {
-  const loc = stop.location;
-  return 'kind' in loc ? null : loc.name;
-}
-
-async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
-  const stopPoints: Array<{ coord: [number, number]; name: string; label: string | null }> = [];
-
-  for (const day of trip.days) {
-    const primary = day.stops.find((s) => s.id === day.primaryStopId) ?? day.stops[0];
-    if (!primary) continue;
-    const coord = getCoord(primary);
-    if (!coord) continue;
-    const prev = stopPoints.at(-1);
-    if (prev && prev.coord[0] === coord[0] && prev.coord[1] === coord[1]) continue;
-    stopPoints.push({ coord, name: getStopName(primary), label: getLabelName(primary) });
-  }
-
-  if (stopPoints.length === 0) {
-    console.log(`  ⚠  No coordinates found — skipping "${trip.title}"`);
-    return false;
-  }
-
-  stopPoints.forEach((p, i) =>
-    console.log(`  ${i + 1}. ${p.name} [${p.coord[1].toFixed(4)}, ${p.coord[0].toFixed(4)}]`),
-  );
-
-  const map = new StaticMaps({ width: 1200, height: 600 });
-
-  if (stopPoints.length > 1) {
-    map.addLine({
-      coords: stopPoints.map((p) => p.coord),
-      color: '#3B82F6CC',
-      width: 3,
-    });
-  }
-
-  for (let i = 0; i < stopPoints.length; i++) {
-    const isFirst = i === 0;
-    const isLast = i === stopPoints.length - 1;
-    map.addCircle({
-      coord: stopPoints[i].coord,
-      radius: 10,
-      fill: isFirst ? '#22C55EDD' : isLast ? '#EF4444DD' : '#3B82F6DD',
-      color: '#FFFFFF',
-      width: 2,
-    });
-  }
-
-  for (const { coord, text, offsetX, offsetY } of computeLabelOffsets(stopPoints, 1200, 600)) {
-    const base = { coord, text, size: 12, font: 'Arial', anchor: 'middle', offsetX, offsetY };
-    map.addText({ ...base, fill: '#222222', color: '#222222', width: 2 });
-    map.addText({ ...base, fill: '#FFFFFF', color: '#222222', width: 1 });
-  }
-
-  await map.render();
-  await map.image.save(outputPath);
-  return true;
-}
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
+const includeHome = process.argv.includes('--include-home');
 
 mkdirSync(MAPS_DIR, { recursive: true });
 
@@ -152,7 +57,7 @@ for (const filePath of tripFiles) {
   const reason = !existsSync(imgPath) ? 'new' : 'changed';
   console.log(`↻  ${trip.id} — ${reason}, generating…`);
 
-  const ok = await generateMap(trip, imgPath);
+  const ok = await generateTripMap(trip, imgPath, { includeHome });
   if (ok) {
     writeFileSync(hashPath, hash);
     console.log(`   → ${imgPath}`);

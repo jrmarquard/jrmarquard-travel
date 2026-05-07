@@ -34,8 +34,9 @@ function latToY(lat: number, zoom: number): number {
 }
 
 // Find the highest zoom where the coordinate bounding box fits in the image.
-// Mirrors StaticMaps' calculateZoom logic (padding = 0).
-function calcZoom(coords: [number, number][], w: number, h: number): number {
+// Mirrors StaticMaps' calculateZoom logic. padX/padY must match the values
+// passed to the StaticMaps constructor so pixel positions stay consistent.
+function calcZoom(coords: [number, number][], w: number, h: number, padX = 0, padY = 0): number {
   if (coords.length <= 1) return 12;
   const lngs = coords.map((c) => c[0]);
   const lats = coords.map((c) => c[1]);
@@ -44,7 +45,7 @@ function calcZoom(coords: [number, number][], w: number, h: number): number {
   for (let z = 17; z >= 1; z--) {
     const fw = (lonToX(maxLon, z) - lonToX(minLon, z)) * TILE_SIZE;
     const fh = (latToY(minLat, z) - latToY(maxLat, z)) * TILE_SIZE;
-    if (fw <= w && fh <= h) return z;
+    if (fw <= w - padX * 2 && fh <= h - padY * 2) return z;
   }
   return 1;
 }
@@ -109,9 +110,11 @@ export function computeLabelOffsets(
   stops: Array<{ coord: [number, number]; label: string | null }>,
   mapW: number,
   mapH: number,
+  paddingX = 0,
+  paddingY = 0,
 ): PlacedLabel[] {
   const coords = stops.map((s) => s.coord);
-  const zoom = calcZoom(coords, mapW, mapH);
+  const zoom = calcZoom(coords, mapW, mapH, paddingX, paddingY);
 
   const lngs = coords.map((c) => c[0]);
   const lats = coords.map((c) => c[1]);
@@ -121,10 +124,16 @@ export function computeLabelOffsets(
   const pixels = coords.map((c) => toPx(c, cX, cY, zoom, mapW, mapH));
   const placed: Box[] = [];
   const result: PlacedLabel[] = [];
+  const labeledCoords = new Set<string>();
 
   for (let i = 0; i < stops.length; i++) {
     const { label, coord } = stops[i];
     if (!label) continue;
+
+    // Skip if this coordinate has already been labeled (e.g. trip start = trip end)
+    const coordKey = `${coord[0]},${coord[1]}`;
+    if (labeledCoords.has(coordKey)) continue;
+    labeledCoords.add(coordKey);
 
     const [px, py] = pixels[i];
 
