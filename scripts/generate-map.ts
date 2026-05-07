@@ -127,13 +127,14 @@ for (let i = 0; i < stopPoints.length; i++) {
   });
 }
 
-// Location labels — black halo first for subtitle-style legibility, then white
-// text on top. Text renders after lines and before circles, so labels sit over
-// the route without obscuring the markers.
+// Location labels — dark-outline pass first (subtitle background), white fill on
+// top. Text renders after lines and before circles, so labels sit over the route
+// without obscuring the markers.
 for (const { coord, text, offsetX, offsetY } of computeLabelOffsets(stopPoints, 1200, 800)) {
-  const base = { coord, text, size: 11, font: 'Arial', anchor: 'middle', offsetX, offsetY };
-  map.addText({ ...base, fill: '#000000', color: '#000000', width: 5 });
-  map.addText({ ...base, fill: '#FFFFFF', color: '#000000', width: 1 });
+  const base = { coord, text, size: 24, font: 'Arial', anchor: 'middle', offsetX, offsetY };
+  
+  map.addText({ ...base, fill: '#000000', color: '#000000', width: 8 }); // visible halo
+  map.addText({ ...base, fill: '#FFFFFF', color: '#FFFFFF', width: 1  }); // pure fill, no bleed
 }
 
 await map.render();

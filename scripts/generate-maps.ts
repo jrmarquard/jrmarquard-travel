@@ -104,9 +104,9 @@ async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
   }
 
   for (const { coord, text, offsetX, offsetY } of computeLabelOffsets(stopPoints, 1200, 600)) {
-    const base = { coord, text, size: 11, font: 'Arial', anchor: 'middle', offsetX, offsetY };
-    map.addText({ ...base, fill: '#000000', color: '#000000', width: 5 });
-    map.addText({ ...base, fill: '#FFFFFF', color: '#000000', width: 1 });
+    const base = { coord, text, size: 12, font: 'Arial', anchor: 'middle', offsetX, offsetY };
+    map.addText({ ...base, fill: '#222222', color: '#222222', width: 2 });
+    map.addText({ ...base, fill: '#FFFFFF', color: '#222222', width: 1 });
   }
 
   await map.render();
