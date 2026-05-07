@@ -53,8 +53,13 @@ function getStopName(stop: Stop): string {
   return 'kind' in loc ? `${loc.kind} transit` : loc.name;
 }
 
+function getLabelName(stop: Stop): string | null {
+  const loc = stop.location;
+  return 'kind' in loc ? null : loc.name;
+}
+
 async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
-  const stopPoints: Array<{ coord: [number, number]; name: string }> = [];
+  const stopPoints: Array<{ coord: [number, number]; name: string; label: string | null }> = [];
 
   for (const day of trip.days) {
     const primary = day.stops.find((s) => s.id === day.primaryStopId) ?? day.stops[0];
@@ -63,7 +68,7 @@ async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
     if (!coord) continue;
     const prev = stopPoints.at(-1);
     if (prev && prev.coord[0] === coord[0] && prev.coord[1] === coord[1]) continue;
-    stopPoints.push({ coord, name: getStopName(primary) });
+    stopPoints.push({ coord, name: getStopName(primary), label: getLabelName(primary) });
   }
 
   if (stopPoints.length === 0) {
@@ -95,6 +100,13 @@ async function generateMap(trip: Trip, outputPath: string): Promise<boolean> {
       color: '#FFFFFF',
       width: 2,
     });
+  }
+
+  for (const { coord, label } of stopPoints) {
+    if (!label) continue;
+    const base = { coord, text: label, size: 11, font: 'Arial', anchor: 'middle', offsetX: 0, offsetY: 20 };
+    map.addText({ ...base, fill: '#FFFFFF', color: '#FFFFFF', width: 4 });
+    map.addText({ ...base, fill: '#1F2937', color: '#FFFFFF', width: 1 });
   }
 
   await map.render();
