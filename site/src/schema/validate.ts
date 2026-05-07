@@ -60,6 +60,7 @@ const PhotoSchema = z.object({
 
 const StopSchema = z.object({
   id: z.string(),
+  home: z.literal(true).optional(),
   location: AnyLocationSchema,
   arrival: ISODatetimeSchema.optional(),
   departure: ISODatetimeSchema.optional(),

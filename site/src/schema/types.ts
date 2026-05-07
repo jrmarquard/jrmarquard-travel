@@ -59,6 +59,7 @@ export interface Photo {
 
 export interface Stop {
   id: string;
+  home?: true;
   location: AnyLocation;
   arrival?: ISODatetime;
   departure?: ISODatetime;

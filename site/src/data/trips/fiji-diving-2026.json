@@ -24,6 +24,7 @@
       "stops": [
         {
           "id": "stop-sydney",
+          "home": true,
           "location": {
             "name": "Sydney",
             "region": "NSW",
@@ -279,7 +280,7 @@
     {
       "date": "2026-05-26",
       "title": "Return to Sydney",
-      "primaryStopId": "stop-sydney-return",
+      "primaryStopId": "stop-nadi-departure",
       "stops": [
         {
           "id": "stop-nadi-departure",
@@ -298,6 +299,7 @@
         },
         {
           "id": "stop-sydney-return",
+          "home": true,
           "location": {
             "name": "Sydney",
             "region": "NSW",
