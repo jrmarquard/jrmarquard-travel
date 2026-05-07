@@ -7,8 +7,8 @@
 
 const TILE_SIZE = 256;
 const MARKER_RADIUS = 10;           // must match the circle radius in map scripts
-const FONT_SIZE_PX = 11 * (4 / 3); // 11pt → px
-const CHAR_WIDTH = FONT_SIZE_PX * 0.55;   // empirical average char width, Arial 11pt
+const FONT_SIZE_PX = 12 * (4 / 3); // 12pt → px
+const CHAR_WIDTH = FONT_SIZE_PX * 0.55;   // empirical average char width, Arial 12pt
 const LABEL_H = FONT_SIZE_PX * 1.5;       // visual height including line spacing
 const COLL_PAD = 4;                        // extra buffer per box side for collision checks
 const BASE_DIST = MARKER_RADIUS + LABEL_H + 2; // minimum center-to-baseline distance
