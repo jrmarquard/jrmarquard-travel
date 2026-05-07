@@ -1,5 +1,5 @@
 {
-  "name": "jrmarquard-travel",
+  "name": "@travel/site",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,7 +12,8 @@
     "astro": "astro",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "process-photos": "node scripts/process-photos.js"
+    "process-photos": "node ../../tooling/process-photos.js",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "astro": "^6.1.5",
