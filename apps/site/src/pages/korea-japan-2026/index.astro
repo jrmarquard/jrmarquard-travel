@@ -2,8 +2,8 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Layout from '../../layouts/Layout.astro';
-import { trip } from '../../data/trips/korea-japan-2026';
-import type { Location } from '../../schema/types';
+import { koreaJapan2026 as trip } from '@travel/data';
+import type { Location } from '@travel/data';
 
 const COUNTRY_FLAG: Record<string, string> = {
   KR: '🇰🇷',
