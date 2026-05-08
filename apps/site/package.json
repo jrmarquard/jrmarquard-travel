@@ -16,8 +16,8 @@
     "typecheck": "astro check"
   },
   "dependencies": {
-    "astro": "^6.1.5",
-    "zod": "^4.4.2"
+    "@travel/data": "workspace:*",
+    "astro": "^6.1.5"
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^8.58.1",

@@ -2,7 +2,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Layout from '../../layouts/Layout.astro';
-import { trip } from '../../data/trips/fiji-diving-2026';
+import { fijiDiving2026 as trip } from '@travel/data';
 import type {
   AccommodationSegment,
   ActivitySegment,
@@ -12,7 +12,7 @@ import type {
   NoteSegment,
   Segment,
   TransferSegment,
-} from '../../schema/types';
+} from '@travel/data';
 
 const COUNTRY_FLAG: Record<string, string> = {
   FJ: '🇫🇯',

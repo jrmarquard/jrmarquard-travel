@@ -18,7 +18,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { resolve } from 'node:path';
 import { generateTripMap, type Trip } from '@travel/maps';
 
-const TRIPS_DIR = resolve('../apps/site/src/data/trips');
+const TRIPS_DIR = resolve('../packages/data/src/trips');
 const MAPS_DIR = resolve('../apps/site/public/maps');
 
 const includeHome = process.argv.includes('--include-home');
